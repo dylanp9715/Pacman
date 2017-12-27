@@ -1,0 +1,55 @@
+/*******************************************************************************
+ * Game Class Interface                                                        *
+ * For Pacman Game (COMP 11 Project 1 | 2016 Spring)                           *
+ ******************************************************************************/
+
+#ifndef GAME_H_INCLUDED
+#define GAME_H_INCLUDED
+
+#include "constants.h"
+#include "pacman.h"
+#include "ghost.h"
+#include "dot.h"
+#include "boulder.h"
+
+class Game {
+        public:
+                Game();
+
+                // prints the manual and stalls until the user types a character
+                void print_manual();
+
+                // calls functions that put boulders, dots, ghosts, and pacman 
+                // in the board array 
+                void set_up_board();
+
+                // Runs the Pacman game!
+                void run();
+
+                // sets up the border and prints out the updated array with
+                // the spaces, boulders, ghosts, pacman, and dots
+                void print_border();
+
+                // determine what function to call after level is over
+                void level_over();
+
+                // runs the next level as long as the previously completed one 
+                // was not level 10
+                void next_level();
+
+                // have the ghosts move automatically and kill pacman if they 
+                // run into him
+                void move_ghosts();
+
+        private:
+                char board[ROWS][COLS];
+                char command;
+                bool result_move, result_ghost;
+                int dots_per_level, dots_eaten, boulders_per_level, level,score;
+                Pacman p;
+                Ghost ghosts[NUM_GHOSTS];
+                Dot dots[NUM_DOTS];
+                Boulder boulders[NUM_BOULDERS];
+};
+
+#endif

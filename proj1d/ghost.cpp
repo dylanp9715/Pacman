@@ -1,0 +1,89 @@
+// ghost.cpp
+// purpose: ghost class implementation
+// by: dylan park
+// date: 30 March 2016
+//
+//
+#include <iostream> 
+using namespace std;
+
+#include "termfuncs.h" 
+#include "constants.h"
+#include "ghost.h"
+#include <cmath>
+// ghost constructor 
+// purpose: to initialize the private members of the ghost class
+// arguments: none
+// return value: none
+Ghost::Ghost() {
+       row = 0;
+       col = 0;
+}
+
+// purpose: initialize the location
+// arguments: row and col
+// return value: none
+void Ghost::set_location(int r, int c) {
+        row = r;
+        col = c;
+}
+
+// purpose: place ghosts on board and keeps track of the last char
+// argument: board array 
+// return value: none
+void Ghost::place_on_board(char board[ROWS][COLS]) {
+        if (board[row][col] != GHOST){      // keep track of last char to 
+                last_char = board[row][col];// replace the spot on the array
+        }                                   // that the ghost was just in with 
+        board[row][col] = GHOST;            // that character
+}
+
+// purpose: move the ghosts, leave the last char in its path, and return true if
+// the ghost hit pacman and false otherwise
+// argument: board array 
+// return value: none
+bool Ghost::move(char board[ROWS][COLS], int target_r, int target_c) {
+        int r = row;
+        int c = col;
+        board[row][col] = last_char; 
+        if (std::abs(target_r - row) >= std::abs(target_c - col)) { 
+                if (target_r > row) {   
+                        row = row + 1;
+                }
+                else {
+                        row = row - 1;
+                }
+        }
+        if (std::abs(target_c - col) > std::abs(target_r - row)) {
+                if (target_c > col) {
+                        col = col + 1;
+                }
+                else {
+                        col = col - 1;
+                }
+        }
+        if (board[row][col] == GHOST) {
+                row = r;
+                col = c;
+        }
+        if (row == target_r and col == target_c) {
+                return true;
+        }
+        else {
+                return false;
+        } 
+}
+
+// purpose: to return the ghost's row location
+// argument: none
+// return value: int
+int Ghost::get_row() {
+        return row;
+}
+
+// purpose: to return the ghost's col location
+// argument: none
+// return value: int
+int Ghost::get_col() {
+        return col;
+}
